@@ -102,36 +102,36 @@ namespace Managers
         {
             if (!_spawner || !_board) return;
 
-#if PLATFORM_ANDROID
+#if UNITY_EDITOR
+            if ((Input.GetKeyDown(_moveRightInput)))
+#else
             if ((_dragDir == SwipeDirection.right && Time.time >= _timeToNextDrag) || 
                 (_swipeDir == SwipeDirection.right && Time.time >= _timeToNextSwipe))
-#elif UNITY_EDITOR
-            if ((Input.GetKey(_moveRightInput) && Time.time >= _timeToMoveSideway) || (Input.GetKeyDown(_moveRightInput)))
 #endif
             {
                 MoveRight();                
             }
-#if PLATFORM_ANDROID
+#if UNITY_EDITOR
+            else if ((Input.GetKeyDown(_moveLeftInput)))
+#else
             else if ((_dragDir == SwipeDirection.left && Time.time >= _timeToNextDrag) || 
                 (_swipeDir == SwipeDirection.left && Time.time >= _timeToNextSwipe))
-#elif UNITY_EDITOR
-            else if ((Input.GetKey(_moveLeftInput) && Time.time >= _timeToMoveSideway) || (Input.GetKeyDown(_moveLeftInput)))
 #endif
             {
                 MoveLeft();
             }
-#if PLATFORM_ANDROID
-            else if ((_swipeDir == SwipeDirection.up && Time.time >= _timeToNextSwipe) || _didTap)
-#elif UNITY_EDITOR
+#if UNITY_EDITOR
             else if (Input.GetKeyDown(_rotateInput) && Time.time >= _timeToRotate)
+#else
+            else if ((_swipeDir == SwipeDirection.up && Time.time >= _timeToNextSwipe) || _didTap)
 #endif
             {
                 Rotate();
             }
-#if PLATFORM_ANDROID
-            else if (_dragDir == SwipeDirection.down && Time.time >= _timeToNextDrag || Time.time >= _timeToFall)
-#elif UNITY_EDITOR
+#if UNITY_EDITOR
             else if ((Input.GetKey(_moveDownInput) && Time.time >= _timeToMoveDown) || (Time.time >= _timeToFall))
+#else
+            else if (_dragDir == SwipeDirection.down && Time.time >= _timeToNextDrag || Time.time >= _timeToFall)
 #endif
             {
                 MoveDown();
